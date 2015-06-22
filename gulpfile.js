@@ -2,6 +2,7 @@ require('babel-core/polyfill');
 
 var babel = require('gulp-babel');
 var del = require('del');
+var electron = require('gulp-electron');
 var exec = require('child_process').exec;
 var fs = require('fs');
 var mkdir = require('mkdirp');
@@ -22,6 +23,15 @@ gulp.task('babel', function () {
 
 gulp.task('clean', function (cb) {
   del([ 'dist', 'build' ], cb);
+});
+
+gulp.task('clean:all', [ 'clean' ], function (cb) {
+  del([ 'cache' ], cb);
+});
+
+gulp.task('html', function () {
+  return gulp.src('./src/**/*.html')
+    .pipe(gulp.dest('./build'));
 });
 
 gulp.task('modules', function () {
@@ -77,17 +87,18 @@ gulp.task('modules', function () {
   });
 });
 
-gulp.task('pack', [ 'build' ], function (cb) {
-  var outdir = path.join(__dirname, 'dist');
-  var exe = path.join(__dirname, 'node_modules', 'asar', 'bin', 'asar');
-  var out = path.join(outdir, 'test-driven-training.asar');
-  var command = [ exe, 'pack', 'build', out ];
-  mkdir(outdir, function (err) {
-    if (err) {
-      return cb(err);
-    }
-    exec(command.join(' '), cb);
-  });
+gulp.task('pack', [ 'build' ], function () {
+  var packageJson = JSON.parse(fs.readFileSync('./build/package.json', 'utf8'));
+  return gulp.src('')
+    .pipe(electron({
+      src: './build',
+      packageJson: packageJson,
+      release: './dist',
+      cache: './cache',
+      version: 'v0.28.2',
+      platforms: [ 'darwin-x64', 'win32-x64' ]
+    }))
+    .pipe(gulp.dest(''));
 });
 
 gulp.task('package.json', function (done) {
@@ -129,7 +140,7 @@ gulp.task('watch', [ 'build' ], function () {
 
 
 
-gulp.task('app-source', [ 'babel', 'package.json' ]);
+gulp.task('app-source', [ 'babel', 'html', 'package.json' ]);
 gulp.task('build', [ 'app-source', 'ace', 'modules' ]);
 gulp.task('dev', [ 'build', 'watch' ]);
 gulp.task('dist', [ 'build', 'pack' ]);
