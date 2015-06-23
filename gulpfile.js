@@ -11,8 +11,8 @@ var path = require('path');
 var gulp = require('gulp');
 
 gulp.task('ace', function () {
-  return gulp.src('./vendor/ace/**/*')
-    .pipe(gulp.dest('./build/vendor'));
+  return gulp.src('./vendor/ace-builds/src-min-noconflict/**/*.*')
+    .pipe(gulp.dest('./build/vendor/ace'));
 });
 
 gulp.task('babel', function () {
@@ -21,12 +21,16 @@ gulp.task('babel', function () {
     .pipe(gulp.dest('./build'));
 });
 
-gulp.task('clean', function (cb) {
-  del([ 'dist', 'build' ], cb);
+gulp.task('clean', [ 'clean:dist' ], function (cb) {
+  del([ 'build' ], cb);
 });
 
 gulp.task('clean:all', [ 'clean' ], function (cb) {
   del([ 'cache' ], cb);
+});
+
+gulp.task('clean:dist', function (cb) {
+  del([ 'dist' ], cb);
 });
 
 gulp.task('html', function () {
@@ -87,7 +91,7 @@ gulp.task('modules', function () {
   });
 });
 
-gulp.task('pack', [ 'build' ], function () {
+gulp.task('pack', [ 'build', 'clean:dist' ], function () {
   var packageJson = JSON.parse(fs.readFileSync('./build/package.json', 'utf8'));
   return gulp.src('')
     .pipe(electron({
