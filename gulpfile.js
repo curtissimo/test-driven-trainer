@@ -211,8 +211,8 @@ gulp.task('pack', [ 'build', 'clean:dist' ], function () {
       packageJson: packageJson,
       release: './dist',
       cache: './cache',
-      version: 'v0.28.2',
-      platforms: [ 'darwin-x64', 'win32-x64' ]
+      version: 'v0.28.3',
+      platforms: [ 'darwin-x64', 'win32-x64', 'win32-ia32' ]
     }))
     .pipe(gulp.dest(''));
 });

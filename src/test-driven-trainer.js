@@ -18,14 +18,22 @@ app.on('window-all-closed', function() {
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', function() {
-  // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
+  let menu = require('./server/app-menu');
+
+  menu
+    .on('application:quit', () => app.quit())
+    .on('core:undo', () => mainWindow.webContents.undo())
+    .on('core:redo', () => mainWindow.webContents.redo())
+    .on('core:cut',  () => mainWindow.webContents.cut())
+    .on('core:copy', () => mainWindow.webContents.copy())
+    .on('core:paste',  () => mainWindow.webContents.paste())
+    .on('core:select-all', () => mainWindow.webContents.selectAll());
+
+  
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
-
-  // Open the devtools.
-  mainWindow.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
