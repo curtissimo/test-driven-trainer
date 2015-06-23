@@ -33,9 +33,121 @@ gulp.task('clean:dist', function (cb) {
   del([ 'dist' ], cb);
 });
 
+gulp.task('cp-icns:mac', [ 'pack' ], function () {
+  var p = path.join(__dirname, 'cache', 'icons', 'mac', 'atom.icns');
+  var d = path.join(__dirname, 'dist', 'v0.28.2', 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources');
+  return gulp.src(p)
+    .pipe(gulp.dest(d));
+});
+
+gulp.task('cp-ico:win', [ 'pack' ], function () {
+  var p = path.join(__dirname, 'cache', 'icons', 'win', 'logo.ico');
+  var d = path.join(__dirname, 'dist', 'v0.28.2', 'win32-x64');
+  return gulp.src(p)
+    .pipe(gulp.dest(d));
+});
+
 gulp.task('html', function () {
   return gulp.src('./src/**/*.html')
     .pipe(gulp.dest('./build'));
+});
+
+gulp.task('icons', function (done) {
+  var p = path.join(__dirname, 'cache', 'icons', 'mac', 'atom.iconset');
+  var w = path.join(__dirname, 'cache', 'icons', 'win');
+  var ico = path.join(p, 'icon_512x512@2x.png');
+  var s = path.join(__dirname, 'art', 'icon.svg');
+
+  return new Promise(function (good, bad) {
+    exec('mkdir -p ' + p, function (e) {
+      if (e) {
+        return bad(e);
+      }
+      good();
+    });
+  })
+  .then(function () {
+    return new Promise(function (good, bad) {
+      exec('inkscape -e ' + ico + ' -w 1024 -h 1024 -D ' + s, function (e) {
+        if (e) {
+          return bad(e);
+        }
+        good();
+      });
+    });
+  })
+  .then(function () {
+    var promises = [];
+
+    function sips(size, hd) {
+      var s = hd? size / 2 : size;
+      var suffix = hd? '@2x.png' : '.png';
+
+      return new Promise(function (good, bad) {
+        var command = [
+          'sips -z',
+          size, size,
+          ico,
+          '--out',
+          path.join(p, 'icon_' + s + 'x' + s + suffix)
+        ];
+        exec(command.join(' '), function (e) {
+          if (e) {
+            return bad(e);
+          }
+          good();
+        });
+      });
+    }
+
+    promises.push(sips(16));
+    promises.push(sips(32, true));
+    promises.push(sips(32));
+    promises.push(sips(64, true));
+    promises.push(sips(128));
+    promises.push(sips(256, true));
+    promises.push(sips(256));
+    promises.push(sips(512, true));
+    promises.push(sips(512));
+    return Promise.all(promises);
+  })
+  .then(function () {
+    return new Promise(function (good, bad) {
+      exec('iconutil -c icns ' + p, function (e) {
+        if (e) {
+          return bad(e);
+        }
+        good();
+      });
+    });
+  })
+  .then(function () {
+    return new Promise(function (good, bad) {
+      exec('mkdir -p ' + w, function (e) {
+        if (e) {
+          return bad(e);
+        }
+        good();
+      });
+    });
+  })
+  .then(function () {
+    var command = [
+      'png2ico',
+      path.join(w, 'logo.ico'),
+      path.join(p, 'icon_16x16.png'),
+      path.join(p, 'icon_32x32.png'),
+      path.join(p, 'icon_128x128.png'),
+    ];
+    return new Promise(function (good, bad) {
+      exec(command.join(' '), function (e) {
+        if (e) {
+          return bad(e);
+        }
+        good();
+      });
+    });
+  });
 });
 
 gulp.task('modules', function () {
@@ -145,7 +257,8 @@ gulp.task('watch', [ 'build' ], function () {
 
 
 gulp.task('app-source', [ 'babel', 'html', 'package.json' ]);
-gulp.task('build', [ 'app-source', 'ace', 'modules' ]);
+gulp.task('build', [ 'app-source', 'ace', 'icons', 'modules' ]);
+gulp.task('cp-icons', [ 'cp-icns:mac', 'cp-ico:win' ]);
 gulp.task('dev', [ 'build', 'watch' ]);
-gulp.task('dist', [ 'build', 'pack' ]);
+gulp.task('dist', [ 'build', 'pack', 'cp-icons' ]);
 gulp.task('default', [ 'build' ]);
