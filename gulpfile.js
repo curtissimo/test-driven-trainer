@@ -10,6 +10,8 @@ var ncp = require('ncp').ncp;
 var path = require('path');
 var gulp = require('gulp');
 
+var electronVersion = '0.28.3';
+
 gulp.task('ace', function () {
   return gulp.src('./vendor/ace-builds/src-min-noconflict/**/*.*')
     .pipe(gulp.dest('./build/vendor/ace'));
@@ -35,14 +37,14 @@ gulp.task('clean:dist', function (cb) {
 
 gulp.task('cp-icns:mac', [ 'pack' ], function () {
   var p = path.join(__dirname, 'cache', 'icons', 'mac', 'atom.icns');
-  var d = path.join(__dirname, 'dist', 'v0.28.2', 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources');
+  var d = path.join(__dirname, 'dist', electronVersion, 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources');
   return gulp.src(p)
     .pipe(gulp.dest(d));
 });
 
 gulp.task('cp-ico:win', [ 'pack' ], function () {
   var p = path.join(__dirname, 'cache', 'icons', 'win', 'logo.ico');
-  var d = path.join(__dirname, 'dist', 'v0.28.2', 'win32-x64');
+  var d = path.join(__dirname, 'dist', electronVersion, 'win32-x64');
   return gulp.src(p)
     .pipe(gulp.dest(d));
 });
