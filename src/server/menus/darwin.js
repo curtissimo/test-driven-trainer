@@ -1,6 +1,12 @@
 var EventEmitter = require('events').EventEmitter;
 let emitter = new EventEmitter();
 
+function emit(...args) {
+  return emitter.emit.bind(emitter, ...args);
+}
+
+emitter.command = emit;
+
 module.exports = {
   emitter: emitter,
   menu: [

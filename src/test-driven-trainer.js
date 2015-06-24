@@ -1,12 +1,12 @@
-var app = require('app');  // Module to control application life.
-var BrowserWindow = require('browser-window');  // Module to create native browser window.
+let app = require('app');  // Module to control application life.
+let BrowserWindow = require('browser-window');  // Module to create native browser window.
 
 // Report crashes to our server.
 require('crash-reporter').start();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
-var mainWindow = null;
+let mainWindow = null;
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
@@ -23,17 +23,22 @@ app.on('ready', function() {
   let menu = require('./server/app-menu');
 
   menu
-    .on('application:quit', () => app.quit())
-    .on('core:undo', () => mainWindow.webContents.undo())
-    .on('core:redo', () => mainWindow.webContents.redo())
-    .on('core:cut',  () => mainWindow.webContents.cut())
-    .on('core:copy', () => mainWindow.webContents.copy())
-    .on('core:paste',  () => mainWindow.webContents.paste())
-    .on('core:select-all', () => mainWindow.webContents.selectAll());
+    .on('app', directive => app[directive]())
+    .on('content', directive => mainWindow.webContents[directive]())
+    .on('editor', (directive, ...args) => {
+      let statement = `editor.${directive}();`;
+      args = args.slice(0, -2);
+      if (args.length > 0) {
+        let sargs = JSON.stringify(args);
+        statement = `editor.${directive}.apply(editor, ${sargs});`;
+      }
+      mainWindow.webContents.executeJavaScript(statement);
+    });
 
   
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
