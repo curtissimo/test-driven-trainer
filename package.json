@@ -1,6 +1,6 @@
 {
   "name": "test-driven-trainer",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A local application that allows for training people by applying test-driven examples.",
   "main": "src/test-driven-trainer.js",
   "scripts": {
