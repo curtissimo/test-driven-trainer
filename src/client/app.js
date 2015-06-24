@@ -8,7 +8,12 @@ setTimeout(() => {
     fontSize: '14pt'
   });
   setTimeout(() => {
-    document.getElementById('editor').classList.remove('not-visible');
+    document.body.classList.remove('passive');
+    document.body.classList.add('active');
+    document.getElementById('editor-container').classList.remove('not-visible');
     document.getElementById('logo').classList.add('not-visible');
+    setTimeout(() => {
+      editor.resize();
+    }, 0);
   }, 1000);
 }, 3000);

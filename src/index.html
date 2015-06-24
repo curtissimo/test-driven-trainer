@@ -9,9 +9,17 @@
     <style type="text/css" media="screen">
     </style>
   </head>
-  <body>
-    <div id="logo"></div>
-    <pre id="editor" class="not-visible"></pre>
+  <body class="passive">
+    <div id="logo">
+      <h1>Loading...</h1>
+    </div>
+    <div id="editor-container" class="not-visible">
+      <div class="editor-toolbar">
+      </div>
+      <div class="editor-rect">
+        <pre id="editor"></pre>
+      </div>
+    </div>
     <script src="./vendor/ace/ace.js"></script>
     <script src="./client/app.js"></script>
   </body>

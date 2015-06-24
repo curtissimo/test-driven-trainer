@@ -5,9 +5,16 @@ html, body {
 body {
   display: flex;
   overflow: hidden;
+  background-color: #333;
+}
+
+.passive {
   justify-content: center;
   align-items: center;
-  background-color: #333;
+}
+
+.active {
+  align-items: stretch;
 }
 
 #logo {
@@ -15,17 +22,36 @@ body {
   height: 512px;
   background-image: url(./icon_512x512.png);
   background-repeat: no-repeat;
+  display: flex;
+
+  h1 {
+    flex: 1;
+    text-align: center;
+    font-family: 'Droid Sans Mono';
+  }
 }
 
 .not-visible {
-  display: none;
+  display: none !important;
 }
 
 #editor {
   margin: 0;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  align-self: stretch;
+  flex: 1;
+}
+
+.editor-rect {
+  flex: 1;
+  display: flex;
+}
+
+.editor-toolbar {
+  height: 30px;
+}
+
+#editor-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }

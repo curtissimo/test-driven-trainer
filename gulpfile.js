@@ -37,6 +37,24 @@ gulp.task('clean:dist', function (cb) {
   del([ 'dist' ], cb);
 });
 
+gulp.task('cp-css-to-dist', [ 'sass' ], function () {
+  var p = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
+  gulp.src('./build/**/*.css')
+    .pipe(gulp.dest(p))
+});
+
+gulp.task('cp-html-to-dist', function () {
+  var p = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
+  gulp.src('./build/**/*.html')
+    .pipe(gulp.dest(p))
+});
+
+gulp.task('cp-js-to-dist', [ 'babel' ], function () {
+  var p = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
+  gulp.src('./build/**/*.js')
+    .pipe(gulp.dest(p))
+});
+
 gulp.task('cp-icns:mac', [ 'pack' ], function () {
   var p = path.join(__dirname, 'cache', 'icons', 'mac', 'atom.icns');
   var d = path.join(__dirname, 'dist', electronVersion, 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources');
@@ -279,8 +297,9 @@ gulp.task('sass', function () {
 });
 
 gulp.task('watch', [ 'build' ], function () {
-  gulp.watch('./src/**/*.js', [ 'babel' ]);
-  gulp.watch('./src/**/*.html', [ 'html' ]);
+  gulp.watch('./src/**/*.js', [ 'babel', 'cp-js-to-dist' ]);
+  gulp.watch('./src/**/*.html', [ 'html', 'cp-html-to-dist' ]);
+  gulp.watch('./src/**/*.scss', [ 'sass', 'cp-css-to-dist' ]);
 });
 
 
