@@ -8,17 +8,33 @@ let control = false;
 let remote = require('remote');
 let remrequire = remote.require;
 let editor = ace.edit("editor");
+let setTheme = editor.setTheme.bind(editor);
+let setOptions = editor.setOptions.bind(editor);
+
+editor.setTheme = theme => {
+  localStorage.setItem('theme', theme);
+  setTheme(theme);
+};
+
+editor.setOptions = (options) => {
+  let o = JSON.parse(localStorage.getItem('options')) || {};
+  Object.assign(o, options);
+  localStorage.setItem('options', JSON.stringify(o));
+  setOptions(o);
+};
 
 setTimeout(() => {
+  let theme = localStorage.getItem('theme') || 'ace/theme/twilight';
+  let options = JSON.parse(localStorage.getItem('options')) || {
+    fontFamily: 'Droid Sans Mono',
+    fontSize: '12pt'
+  };
   editor.$blockScrolling = Infinity;
-  editor.setTheme("ace/theme/twilight");
+  editor.setTheme(theme);
   editor.getSession().setMode("ace/mode/javascript");
   editor.getSession().setTabSize(2);
   editor.getSession().setUseSoftTabs(true);
-  editor.setOptions({
-    fontFamily: 'Droid Sans Mono',
-    fontSize: '12pt'
-  });
+  editor.setOptions(options);
 
   function evaluate() {
     let i = 0;

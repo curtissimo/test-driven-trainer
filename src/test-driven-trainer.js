@@ -51,7 +51,7 @@ app.on('ready', function() {
       mainWindow.webContents.executeJavaScript(statement);
     })
     .on('element:style', (property, value) => {
-      let statement = `document.getElementById('editor').style.${property} = '${value}'`;
+      let statement = `editor.setOptions({ ${property}: ${JSON.stringify(value)} });`;
       mainWindow.webContents.executeJavaScript(statement);
     })
 
