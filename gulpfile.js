@@ -252,6 +252,7 @@ gulp.task('package.json', function (done) {
 
 gulp.task('watch', [ 'build' ], function () {
   gulp.watch('./src/**/*.js', [ 'babel' ]);
+  gulp.watch('./src/**/*.html', [ 'html' ]);
 });
 
 
