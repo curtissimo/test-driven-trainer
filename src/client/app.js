@@ -21,18 +21,17 @@ setTimeout(() => {
   });
 
   function evaluate() {
-    let i = 1;
-    let raw = 'var __line_number__ = 1;' + editor.getValue();
-    raw = raw.replace(/\n/g, () => {
+    let i = 0;
+    let raw = editor.getValue();
+    raw = raw.replace(/([^\n]*)\n?/g, (match, p1) => {
       i += 1;
-      return '\n__line_number__ = ' + i + ';';
+      return p1.replace(/assert\.([^\(]+)\(/g, `assert.$1(${i}, `) + '\n';
     });
     let output = id('console-output');
     output.innerHTML = '';
     try {
       let code = babel.transform(raw).code;
       code = code.replace(/require\(/g, 'remrequire(');
-      code = code.replace(/assert\.([^\(]+)\(/g, 'assert.$1(__line_number__, ')
       code += '\nTDT.run();';
       eval(code);
     } catch(e) {
