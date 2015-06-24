@@ -212,7 +212,7 @@ gulp.task('pack', [ 'build', 'clean:dist' ], function () {
       release: './dist',
       cache: './cache',
       version: 'v0.28.3',
-      platforms: [ 'darwin-x64', 'win32-x64', 'win32-ia32' ]
+      platforms: [ 'darwin-x64', 'win32-x64', ] //'win32-ia32' ]
     }))
     .pipe(gulp.dest(''));
 });
