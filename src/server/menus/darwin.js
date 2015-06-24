@@ -18,6 +18,12 @@ module.exports = {
       }, {
         type: 'separator'
       }, {
+        label: '&Dev Tools',
+        click: emit('window', 'toggleDevTools'),
+        accelerator: 'F12'
+      }, {
+        type: 'separator'
+      }, {
         label: 'Services',
         submenu: []
       }, {

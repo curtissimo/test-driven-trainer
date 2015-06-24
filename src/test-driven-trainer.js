@@ -25,6 +25,7 @@ app.on('ready', function() {
   menu
     .on('app', directive => app[directive]())
     .on('content', directive => mainWindow.webContents[directive]())
+    .on('window', directive => mainWindow[directive]())
     .on('editor', (directive, ...args) => {
       let statement = `editor.${directive}();`;
       args = args.slice(0, -2);
@@ -42,6 +43,7 @@ app.on('ready', function() {
   
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {

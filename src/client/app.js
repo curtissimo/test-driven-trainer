@@ -34,6 +34,9 @@ setTimeout(() => {
     try {
       eval(code);
     } finally {
+      if (TDT.errors.length > 0 && id('console').classList.contains('not-visible')) {
+        id('console').classList.toggle('not-visible');
+      }
       for (var err of TDT.errors) {
         output.innerHTML += `<div class="evaluation-error">
           <div class="evaluation-error-name" >Name: ${err.testName}</div>

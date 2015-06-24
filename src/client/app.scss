@@ -37,6 +37,14 @@ body {
   display: none !important;
 }
 
+#toggle-console {
+  order: 2;
+}
+
+#editor-toolbar {
+  justify-content: space-between;
+}
+
 #editor {
   margin: 0;
   align-self: stretch;
@@ -64,7 +72,7 @@ body {
   align-items: center;
 
   button {
-    margin-left: .5em;
+    margin: 0 .5em;
   }
 }
 

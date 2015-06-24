@@ -1,11 +1,35 @@
 class Assertions {
-  ok(line, value, message) {
+  ok(line, value) {
     if (!value) {
       throw {
         name: 'VerificationError',
         lineNumber: line,
         toString: function () {
           return 'Expected value to be truthy';
+        }
+      };
+    }
+  }
+
+  equal(line, expected, value) {
+    if (expected !== value) {
+      throw {
+        name: 'VerificationError',
+        lineNumber: line,
+        toString: function () {
+          return `Expected ${JSON.stringify(expected)} but got ${JSON.stringify(value)}`;
+        }
+      };
+    }
+  }
+
+  equalish(line, expected, value) {
+    if (expected != value) {
+      throw {
+        name: 'VerificationError',
+        lineNumber: line,
+        toString: function () {
+          return `Expected something like ${JSON.stringify(expected)} but got ${JSON.stringify(value)}`;
         }
       };
     }

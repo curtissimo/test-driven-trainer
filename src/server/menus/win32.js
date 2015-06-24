@@ -15,6 +15,8 @@ module.exports = {
       submenu: [
         { label: '&Reload', click: emit('content', 'reload'), accelerator: 'Control+R' },
         { type: 'separator' },
+        { label: '&Dev Tools', click: emit('window', 'toggleDevTools'), accelerator: 'F12' },
+        { type: 'separator' },
         { label: 'E&xit', click: emit('app', 'quit'), accelerator: 'Control+Q' }
       ]
     },
