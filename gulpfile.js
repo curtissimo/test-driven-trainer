@@ -49,6 +49,11 @@ gulp.task('cp-ico:win', [ 'pack' ], function () {
     .pipe(gulp.dest(d));
 });
 
+gulp.task('fonts', function () {
+  return gulp.src('./src/fonts/*.*')
+    .pipe(gulp.dest('./build/fonts'));
+});
+
 gulp.task('html', function () {
   return gulp.src('./src/**/*.html')
     .pipe(gulp.dest('./build'));
@@ -259,7 +264,7 @@ gulp.task('watch', [ 'build' ], function () {
 
 
 
-gulp.task('app-source', [ 'babel', 'html', 'package.json' ]);
+gulp.task('app-source', [ 'babel', 'fonts', 'html', 'package.json' ]);
 gulp.task('build', [ 'app-source', 'ace', 'icons', 'modules' ]);
 gulp.task('cp-icons', [ 'cp-icns:mac', 'cp-ico:win' ]);
 gulp.task('dev', [ 'build', 'watch' ]);

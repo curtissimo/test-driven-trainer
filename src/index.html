@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Test-Driven Training</title>
+    <title>Test-Driven Trainer</title>
+    <link rel="stylesheet" href="./fonts/fonts.css">
     <style type="text/css" media="screen">
       body {
         overflow: hidden;
@@ -24,7 +25,7 @@
     </style>
   </head>
   <body>
-    <pre id="editor" class="not-visible">function foo(items) {
+    <pre id="editor" class="not-visible droid">function foo(items) {
         var i;
         for (i = 0; i &lt; items.length; i++) {
             alert("Ace Rocks " + items[i]);
@@ -36,6 +37,10 @@
         editor.$blockScrolling = Infinity;
         editor.setTheme("ace/theme/twilight");
         editor.getSession().setMode("ace/mode/javascript");
+        editor.setOptions({
+          fontFamily: 'Droid Sans Mono',
+          fontSize: '14pt'
+        }); 
         document.getElementById('editor').classList.remove('not-visible');
     </script>
   </body>

@@ -33,7 +33,11 @@ app.on('ready', function() {
         statement = `editor.${directive}.apply(editor, ${sargs});`;
       }
       mainWindow.webContents.executeJavaScript(statement);
-    });
+    })
+    .on('element:style', (property, value) => {
+      let statement = `document.getElementById('editor').style.${property} = '${value}'`;
+      mainWindow.webContents.executeJavaScript(statement);
+    })
 
   
   // and load the index.html of the app.
