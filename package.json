@@ -1,0 +1,36 @@
+{
+  "name": "test-driven-trainer",
+  "version": "0.1.0",
+  "description": "A local application that allows for training people by applying test-driven examples.",
+  "main": "src/test-driven-trainer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curtissimo/test-driven-trainer.git"
+  },
+  "keywords": [
+    "training"
+  ],
+  "author": "Curtis Schlak <realistschuckle@gmail.com>",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/curtissimo/test-driven-trainer/issues"
+  },
+  "homepage": "https://github.com/curtissimo/test-driven-trainer#readme",
+  "dependencies": {
+    "babel-core": "^5.6.1"
+  },
+  "devDependencies": {
+    "asar": "^0.7.2",
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-babel": "^5.1.0",
+    "gulp-electron": "0.0.5",
+    "gulp-sass": "^2.0.1",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0"
+  }
+}

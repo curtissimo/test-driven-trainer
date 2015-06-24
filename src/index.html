@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Test-Driven Trainer</title>
+    <link rel="stylesheet" href="./fonts/fonts.css">
+    <link rel="stylesheet" href="./client/app.css">
+    <style type="text/css" media="screen">
+    </style>
+  </head>
+  <body class="passive">
+    <div id="logo">
+      <h1>Loading...</h1>
+    </div>
+    <div id="editor-container" class="not-visible">
+      <div id="editor-toolbar" class="toolbar">
+        <button id="toggle-console">Toggle Console</button>
+        <button id="evaluate">Evaluate</button>
+      </div>
+      <div id="editor-and-console">
+        <div id="editor-rect">
+          <pre id="editor">TDT.test('test', function (assert) {
+  assert.ok(false);
+});
+</pre>
+        </div>
+        <div id="console" class="not-visible">
+          <div id="console-toolbar" class="toolbar">
+            <button id="toggle-console-position"></button>
+          </div>
+          <div id="console-output"></div>
+        </div>
+      </div>
+    </div>
+    <script src="./vendor/ace/ace.js"></script>
+    <script src="./node_modules/babel-core/browser.js"></script>
+    <script src="./client/test.js"></script>
+    <script src="./client/app.js"></script>
+  </body>
+</html>

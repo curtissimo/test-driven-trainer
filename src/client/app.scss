@@ -1,0 +1,211 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  overflow: hidden;
+  background-color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.passive {
+  justify-content: center;
+  align-items: center;
+}
+
+.active {
+  align-items: stretch;
+}
+
+#logo {
+  width: 512px;
+  height: 512px;
+  background-image: url(./icon_512x512.png);
+  background-repeat: no-repeat;
+  display: flex;
+
+  h1 {
+    flex: 1;
+    text-align: center;
+    font-family: 'Droid Sans Mono';
+  }
+}
+
+.not-visible {
+  display: none !important;
+}
+
+#toggle-console {
+  order: 2;
+}
+
+#editor-toolbar {
+  justify-content: space-between;
+}
+
+#editor {
+  margin: 0;
+  align-self: stretch;
+  flex: 1;
+}
+
+#console {
+  margin: 0;
+  align-self: stretch;
+  flex: 1;
+}
+
+#editor-rect {
+  flex: 1;
+  display: flex;
+}
+
+.toolbar {
+  height: 40px;
+  min-height: 40px;
+  flex-basis: 40px;
+  font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 9pt;
+  display: flex;
+  align-items: center;
+
+  button {
+    margin: 0 .5em;
+  }
+}
+
+#editor-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+#editor-and-console {
+  flex: 1;
+  display: flex;
+
+  &.vertical {
+    flex-direction: column;
+  }
+}
+
+#console {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+#console-output {
+  flex: 1;
+}
+
+#toggle-console-position {
+  &:after {
+    content: 'Dock to bottom';
+  }
+
+  &.vertical:after {
+    content: 'Dock to right';
+  }
+}
+
+.evaluation-error {
+  padding: 0.5em;
+  border-bottom: 1px solid #666;
+  font-family: 'Segoe UI', sans-serif;
+  color: #F44336;
+}
+
+.evaluation-error-name {
+  font-size: 90%;
+  font-weight: bold;
+}
+
+.evaluation-error-position {
+  font-size: 90%;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.evaluation-error-message {
+}
+
+
+
+
+/*!
+Pure v0.6.0
+Copyright 2014 Yahoo! Inc. All rights reserved.
+Licensed under the BSD License.
+https://github.com/yahoo/pure/blob/master/LICENSE.md
+*/
+button {
+    /* Structure */
+    display: inline-block;
+    zoom: 1;
+    line-height: normal;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    -webkit-user-drag: none;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+/* Firefox: Get rid of the inner focus border */
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+/*csslint outline-none:false*/
+
+button {
+    font-family: inherit;
+    font-size: 100%;
+    padding: 0.5em 1em;
+    color: #444; /* rgba not supported (IE 8) */
+    color: rgba(0, 0, 0, 0.80); /* rgba supported */
+    border: 1px solid #999;  /*IE 6/7/8*/
+    border: none rgba(0, 0, 0, 0);  /*IE9 + everything else*/
+    background-color: #BBDEFB;
+    text-decoration: none;
+    border-radius: 2px;
+}
+
+button:hover,
+button:focus {
+    background-image: linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));
+}
+button:focus {
+    outline: 0;
+}
+button:active {
+    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset, 0 0 6px rgba(0,0,0, 0.20) inset;
+    border-color: #000\9;
+}
+
+button[disabled] {
+    border: none;
+    background-image: none;
+    filter: alpha(opacity=40);
+    opacity: 0.40;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Firefox: Get rid of the inner focus border */
+button::-moz-focus-inner{
+    padding: 0;
+    border: 0;
+}
+
+button-primary,
+button-selected {
+    background-color: rgb(0, 120, 231);
+    color: #fff;
+}
