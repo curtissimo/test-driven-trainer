@@ -29,6 +29,7 @@
     <script src="./vendor/ace/ace.js"></script>
     <script>
         var editor = ace.edit("editor");
+        editor.$blockScrolling = Infinity;
         editor.setTheme("ace/theme/twilight");
         editor.getSession().setMode("ace/mode/javascript");
     </script>
