@@ -6,21 +6,25 @@
     <title>Test-Driven Training</title>
     <style type="text/css" media="screen">
       body {
-          overflow: hidden;
+        overflow: hidden;
+      }
+
+      .not-visible {
+        visibility: hidden;
       }
 
       #editor {
-          margin: 0;
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
       }
     </style>
   </head>
   <body>
-    <pre id="editor">function foo(items) {
+    <pre id="editor" class="not-visible">function foo(items) {
         var i;
         for (i = 0; i &lt; items.length; i++) {
             alert("Ace Rocks " + items[i]);
@@ -32,6 +36,7 @@
         editor.$blockScrolling = Infinity;
         editor.setTheme("ace/theme/twilight");
         editor.getSession().setMode("ace/mode/javascript");
+        document.getElementById('editor').classList.remove('not-visible');
     </script>
   </body>
 </html>

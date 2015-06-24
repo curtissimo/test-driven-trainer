@@ -13,6 +13,8 @@ module.exports = {
     {
       label: '&Test-Driven Trainer',
       submenu: [
+        { label: '&Reload', click: emit('content', 'reload'), accelerator: 'Control+R' },
+        { type: 'separator' },
         { label: 'E&xit', click: emit('app', 'quit'), accelerator: 'Control+Q' }
       ]
     },
