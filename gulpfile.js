@@ -8,7 +8,9 @@ var fs = require('fs');
 var mkdir = require('mkdirp');
 var ncp = require('ncp').ncp;
 var path = require('path');
+var prefix = require('gulp-autoprefixer');
 var gulp = require('gulp');
+var sass = require('gulp-sass');
 
 var electronVersion = '0.28.3';
 
@@ -47,6 +49,11 @@ gulp.task('cp-ico:win', [ 'pack' ], function () {
   var d = path.join(__dirname, 'dist', electronVersion, 'win32-x64');
   return gulp.src(p)
     .pipe(gulp.dest(d));
+});
+
+gulp.task('cp-pngs:web', [ 'icons' ], function () {
+  gulp.src('./cache/icons/mac/atom.iconset/icon_512x512.png')
+    .pipe(gulp.dest('./build/client'));
 });
 
 gulp.task('fonts', function () {
@@ -257,6 +264,14 @@ gulp.task('package.json', function (done) {
   });
 });
 
+gulp.task('sass', function () {
+  return gulp.src('./src/**/*.scss')
+    .pipe(sass())
+    .pipe(prefix())
+    .pipe(gulp.dest('./build'));
+});
+
+
 gulp.task('watch', [ 'build' ], function () {
   gulp.watch('./src/**/*.js', [ 'babel' ]);
   gulp.watch('./src/**/*.html', [ 'html' ]);
@@ -264,8 +279,8 @@ gulp.task('watch', [ 'build' ], function () {
 
 
 
-gulp.task('app-source', [ 'babel', 'fonts', 'html', 'package.json' ]);
-gulp.task('build', [ 'app-source', 'ace', 'icons', 'modules' ]);
+gulp.task('app-source', [ 'babel', 'fonts', 'html', 'package.json', 'sass' ]);
+gulp.task('build', [ 'app-source', 'ace', 'icons', 'modules', 'cp-pngs:web' ]);
 gulp.task('cp-icons', [ 'cp-icns:mac', 'cp-ico:win' ]);
 gulp.task('dev', [ 'build', 'watch' ]);
 gulp.task('dist', [ 'build', 'pack', 'cp-icons' ]);

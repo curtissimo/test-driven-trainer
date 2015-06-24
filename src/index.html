@@ -5,38 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Test-Driven Trainer</title>
     <link rel="stylesheet" href="./fonts/fonts.css">
+    <link rel="stylesheet" href="./client/app.css">
     <style type="text/css" media="screen">
-      body {
-        overflow: hidden;
-      }
-
-      .not-visible {
-        visibility: hidden;
-      }
-
-      #editor {
-        margin: 0;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-      }
     </style>
   </head>
   <body>
+    <div id="logo"></div>
     <pre id="editor" class="not-visible"></pre>
     <script src="./vendor/ace/ace.js"></script>
-    <script>
-        var editor = ace.edit("editor");
-        editor.$blockScrolling = Infinity;
-        editor.setTheme("ace/theme/twilight");
-        editor.getSession().setMode("ace/mode/javascript");
-        editor.setOptions({
-          fontFamily: 'Droid Sans Mono',
-          fontSize: '14pt'
-        }); 
-        document.getElementById('editor').classList.remove('not-visible');
-    </script>
+    <script src="./client/app.js"></script>
   </body>
 </html>
