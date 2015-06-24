@@ -13,6 +13,12 @@ module.exports = {
     {
       label: 'Test-Driven Trainer',
       submenu: [{
+        label: '&Open training...',
+        click: emit('custom', 'loadTraining'),
+        accelerator: 'Command+O'
+      }, {
+        type: 'separator'
+      }, {
         label: '&Reload',
         click: emit('content', 'reload'), accelerator: 'Command+R'
       }, {

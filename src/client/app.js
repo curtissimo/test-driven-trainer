@@ -7,12 +7,14 @@ let keys = {
 let control = false;
 let remote = require('remote');
 let remrequire = remote.require;
+let editor = ace.edit("editor");
 
 setTimeout(() => {
-  let editor = ace.edit("editor");
   editor.$blockScrolling = Infinity;
   editor.setTheme("ace/theme/twilight");
   editor.getSession().setMode("ace/mode/javascript");
+  editor.getSession().setTabSize(2);
+  editor.getSession().setUseSoftTabs(true);
   editor.setOptions({
     fontFamily: 'Droid Sans Mono',
     fontSize: '12pt'
@@ -27,22 +29,30 @@ setTimeout(() => {
     });
     let output = id('console-output');
     output.innerHTML = '';
-    let code = babel.transform(raw).code;
-    code = code.replace(/require\(/g, 'remrequire(');
-    code = code.replace(/assert\.([^\(]+)\(/g, 'assert.$1(__line_number__, ')
-    code += '\nTDT.run();';
     try {
+      let code = babel.transform(raw).code;
+      code = code.replace(/require\(/g, 'remrequire(');
+      code = code.replace(/assert\.([^\(]+)\(/g, 'assert.$1(__line_number__, ')
+      code += '\nTDT.run();';
       eval(code);
+    } catch(e) {
+      output.innerHTML = `<div class="evaluation-error">${e}</div>`;
     } finally {
-      if (TDT.errors.length > 0 && id('console').classList.contains('not-visible')) {
+      if (id('console').classList.contains('not-visible')) {
         id('console').classList.toggle('not-visible');
       }
-      for (var err of TDT.errors) {
-        output.innerHTML += `<div class="evaluation-error">
-          <div class="evaluation-error-name" >Name: ${err.testName}</div>
-          <div class="evaluation-error-position" data-value="${err.lineNumber}">Line number: ${err.lineNumber}</div>
-          <div class="evaluation-error-message">${err}</div>
-        </div>`;
+      for (var result of TDT.results) {
+        if (result.ok) {
+          output.innerHTML += `<div class="evaluation-passed">
+            <div class="evaluation-passed-name" >Test "${result.testName}" passed</div>
+          </div>`;
+        } else {
+          output.innerHTML += `<div class="evaluation-error">
+            <div class="evaluation-error-name" >Name: ${result.testName}</div>
+            <div class="evaluation-error-position" data-value="${result.lineNumber}">Line number: ${result.lineNumber}</div>
+            <div class="evaluation-error-message">${result}</div>
+          </div>`;
+        }
       }
     }
     TDT.reset();

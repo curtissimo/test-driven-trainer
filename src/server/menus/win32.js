@@ -13,6 +13,8 @@ module.exports = {
     {
       label: '&Test-Driven Trainer',
       submenu: [
+        { label: '&Open training...', click: emit('custom', 'loadTraining'), accelerator: 'Control+O' },
+        { type: 'separator' },
         { label: '&Reload', click: emit('content', 'reload'), accelerator: 'Control+R' },
         { type: 'separator' },
         { label: '&Dev Tools', click: emit('window', 'toggleDevTools'), accelerator: 'F12' },

@@ -1,5 +1,7 @@
 let app = require('app');  // Module to control application life.
 let BrowserWindow = require('browser-window');  // Module to create native browser window.
+let dialog = require('dialog');
+let fs = require('fs');
 
 // Report crashes to our server.
 require('crash-reporter').start();
@@ -15,6 +17,18 @@ app.on('window-all-closed', function() {
   }
 });
 
+let custom = {
+  loadTraining: function () {
+    dialog.showOpenDialog(mainWindow, {
+      title: 'Choose a training file'
+    }, filenames => {
+      fs.readFile(filenames[0], 'utf8', function (e, data) {
+        mainWindow.webContents.executeJavaScript(`editor.setValue("${data}")`);
+      });
+    });
+  }
+};
+
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', function() {
@@ -26,6 +40,7 @@ app.on('ready', function() {
     .on('app', directive => app[directive]())
     .on('content', directive => mainWindow.webContents[directive]())
     .on('window', directive => mainWindow[directive]())
+    .on('custom', directive => custom[directive]())
     .on('editor', (directive, ...args) => {
       let statement = `editor.${directive}();`;
       args = args.slice(0, -2);

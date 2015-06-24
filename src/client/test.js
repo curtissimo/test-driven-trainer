@@ -40,6 +40,7 @@ class Tester {
   constructor() {
     this._tests = {};
     this._errors = [];
+    this._results = [];
     this._assert = new Assertions();
   }
 
@@ -50,21 +51,28 @@ class Tester {
   reset() {
     this._tests = {};
     this._errors = [];
+    this._results = [];
   }
 
   run() {
     for (let key of Object.keys(this._tests)) {
       try {
         this._tests[key](this._assert);
+        this._results.push({ testName: key, ok: true });
       } catch (e) {
         e.testName = key;
         this._errors.push(e);
+        this._results.push(e);
       }
     }
   }
 
   get errors() {
     return this._errors;
+  }
+
+  get results() {
+    return this._results;
   }
 }
 

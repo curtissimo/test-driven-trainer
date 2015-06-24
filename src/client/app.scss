@@ -119,6 +119,13 @@ body {
   color: #F44336;
 }
 
+.evaluation-passed {
+  padding: 0.5em;
+  border-bottom: 1px solid #666;
+  font-family: 'Segoe UI', sans-serif;
+  color: #4CAF50;
+}
+
 .evaluation-error-name {
   font-size: 90%;
   font-weight: bold;
