@@ -4,7 +4,7 @@ let MenuItem = require('menu-item');
 let path = require('path');
 let template = require(`./menus/${process.platform}`);
 
-let defaultSize = '14pt';
+let defaultSize = '12pt';
 let currentSize = defaultSize;
 let emit = template.emitter.command;
 let family = function (font) {
