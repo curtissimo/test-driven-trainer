@@ -43,7 +43,7 @@ gulp.task('cp-css-to-dist', [ 'sass' ], function () {
     .pipe(gulp.dest(p))
 });
 
-gulp.task('cp-html-to-dist', [ 'html' ] function () {
+gulp.task('cp-html-to-dist', [ 'html' ], function () {
   var p = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
   gulp.src('./build/**/*.html')
     .pipe(gulp.dest(p))

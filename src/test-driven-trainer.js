@@ -34,31 +34,30 @@ let custom = {
 app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
-  let menu = require('./server/app-menu');
-
-  menu
-    .on('app', directive => app[directive]())
-    .on('content', directive => mainWindow.webContents[directive]())
-    .on('window', directive => mainWindow[directive]())
-    .on('custom', directive => custom[directive]())
-    .on('editor', (directive, ...args) => {
-      let statement = `editor.${directive}();`;
-      args = args.slice(0, -2);
-      if (args.length > 0) {
-        let sargs = JSON.stringify(args);
-        statement = `editor.${directive}.apply(editor, ${sargs});`;
-      }
-      mainWindow.webContents.executeJavaScript(statement);
-    })
-    .on('element:style', (property, value) => {
-      let statement = `editor.setOptions({ ${property}: ${JSON.stringify(value)} });`;
-      mainWindow.webContents.executeJavaScript(statement);
-    })
-
-  
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/splash.html');
-  mainWindow.openDevTools();
+
+  process.nextTick(() => {
+    let menu = require('./server/app-menu');
+    menu
+      .on('app', directive => app[directive]())
+      .on('content', directive => mainWindow.webContents[directive]())
+      .on('window', directive => mainWindow[directive]())
+      .on('custom', directive => custom[directive]())
+      .on('editor', (directive, ...args) => {
+        let statement = `editor.${directive}();`;
+        args = args.slice(0, -2);
+        if (args.length > 0) {
+          let sargs = JSON.stringify(args);
+          statement = `editor.${directive}.apply(editor, ${sargs});`;
+        }
+        mainWindow.webContents.executeJavaScript(statement);
+      })
+      .on('element:style', (property, value) => {
+        let statement = `editor.setOptions({ ${property}: ${JSON.stringify(value)} });`;
+        mainWindow.webContents.executeJavaScript(statement);
+      });
+  });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
