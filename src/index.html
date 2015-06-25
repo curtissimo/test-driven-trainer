@@ -1,42 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Test-Driven Trainer</title>
-    <link rel="stylesheet" href="./fonts/fonts.css">
-    <link rel="stylesheet" href="./client/app.css">
-    <style type="text/css" media="screen">
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>html, body { background-color: #333; }</style>
+    <script src="./client/components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="./client/components/iron-icons/iron-icons.html">
+    <link rel="import" href="./client/components/iron-pages/iron-pages.html">
+    <link rel="import" href="./client/components/paper-toolbar/paper-toolbar.html">
+    <link rel="import" href="./client/components/paper-icon-button/paper-icon-button.html">
   </head>
-  <body class="passive">
-    <div id="logo">
-      <h1>Loading...</h1>
+  <body class="fullbleed layout horizontal" unresolved>
+    <div id="training" class="flex">
+      <paper-toolbar justify="center">
+        <paper-icon-button icon="arrow-back" id="previous"></paper-icon-button>
+        <div class="title">&laquo;training title&raquo;</div>
+        <paper-icon-button icon="arrow-forward" id="next"></paper-icon-button>
+      </paper-toolbar>
+      <iron-pages id="training-content" selected="0">
+        <div id="slide">slide</div>
+        <div id="code">code</div>
+      </iron-pages>
     </div>
-    <div id="editor-container" class="not-visible">
-      <div id="editor-toolbar" class="toolbar">
-        <button id="toggle-console">Toggle Console</button>
-        <button id="evaluate">Evaluate</button>
-      </div>
-      <div id="editor-and-console">
-        <div id="editor-rect">
-          <pre id="editor">TDT.test('test', function (assert) {
-  assert.ok(false);
-});
-</pre>
-        </div>
-        <div id="console" class="not-visible">
-          <div id="console-toolbar" class="toolbar">
-            <button id="toggle-console-position"></button>
-          </div>
-          <div id="console-output"></div>
-        </div>
-      </div>
-    </div>
-    <script src="./vendor/ace/ace.js"></script>
-    <script src="./node_modules/babel-core/browser-polyfill.min.js"></script>
-    <script src="./node_modules/babel-core/browser.js"></script>
-    <script src="./client/test.js"></script>
-    <script src="./client/app.js"></script>
   </body>
 </html>
