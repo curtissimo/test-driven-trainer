@@ -20,7 +20,7 @@ gulp.task('ace', function () {
 });
 
 gulp.task('babel', function () {
-  return gulp.src('./src/**/*.js')
+  return gulp.src([ '!./src/client/components/**', './src/**/*.js' ])
     .pipe(babel())
     .pipe(gulp.dest('./build'));
 });
@@ -80,7 +80,7 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('html', function () {
-  return gulp.src('./src/**/*.html')
+  return gulp.src([ '!./src/client/components/**', './src/**/*.html' ])
     .pipe(gulp.dest('./build'));
 });
 
@@ -282,6 +282,21 @@ gulp.task('package.json', function (done) {
   });
 });
 
+gulp.task('polymer', function () {
+  var sources =  [
+    '!./src/client/components/**/demo/**',
+    '!./src/client/components/**/test/**',
+    '!./src/client/components/**/*bower.json',
+    '!./src/client/components/**/README*',
+    '!./src/client/components/**/LICENSE*',
+    '!./src/client/components/**/*.log',
+    '!./src/client/components/**/package.json',
+    './src/client/components/**/*.*'
+  ];
+  return gulp.src(sources)
+    .pipe(gulp.dest('./build/client/components'));
+});
+
 gulp.task('rename:win', [ 'pack' ], function (done) {
   var p = path.join(__dirname, 'dist', electronVersion, 'win32-x64');
   var s = path.join(p, 'test-driven-trainer.exe');
@@ -305,7 +320,7 @@ gulp.task('watch', [ 'build' ], function () {
 
 
 gulp.task('app-source', [ 'babel', 'fonts', 'html', 'package.json', 'sass' ]);
-gulp.task('build', [ 'app-source', 'ace', 'icons', 'modules', 'cp-pngs:web' ]);
+gulp.task('build', [ 'polymer', 'app-source', 'ace', 'icons', 'modules', 'cp-pngs:web' ]);
 gulp.task('cp-icons', [ 'cp-icns:mac', 'cp-ico:win' ]);
 gulp.task('dev', [ 'build', 'watch' ]);
 gulp.task('dist', [ 'build', 'pack', 'cp-icons', 'rename' ]);

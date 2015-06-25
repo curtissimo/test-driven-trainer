@@ -1,0 +1,27 @@
+{
+  "name": "test-driven-trainer",
+  "version": "0.2.0",
+  "homepage": "http://curtissimo.com/tdt",
+  "authors": [
+    "Curtis Schlak <realistschuckle@gmail.com>"
+  ],
+  "description": "A local application that allows for training people by applying test-driven examples.",
+  "main": "src/test-driven-trainer.js",
+  "license": "WTFPL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/client/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper-toolbar": "PolymerElements/paper-toolbar#^1.0.0",
+    "paper-button": "PolymerElements/paper-button#^1.0.0",
+    "paper-dialog": "PolymerElements/paper-dialog#^1.0.0",
+    "paper-fab": "PolymerElements/paper-fab#^1.0.0",
+    "iron-pages": "PolymerElements/iron-pages#^1.0.0"
+  }
+}
