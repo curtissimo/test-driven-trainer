@@ -35,7 +35,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
   // and load the index.html of the app.
-  mainWindow.loadUrl('file://' + __dirname + '/splash.html');
+  mainWindow.loadUrl('file://' + __dirname + '/client/splash.html');
 
   process.nextTick(() => {
     let menu = require('./server/app-menu');
