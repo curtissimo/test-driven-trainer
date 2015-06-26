@@ -18,7 +18,7 @@ app.on('window-all-closed', function() {
 });
 
 let custom = {
-  loadTraining: function () {
+  loadTraining() {
     dialog.showOpenDialog(mainWindow, {
       title: 'Choose a training file'
     }, filenames => {
@@ -26,13 +26,19 @@ let custom = {
         mainWindow.webContents.executeJavaScript(`editor.setValue("${data}")`);
       });
     });
+  },
+  showPreferences() {
+    mainWindow.loadUrl('file://' + __dirname + '/client/preferences.html');
   }
 };
 
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', function() {
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({
+    'min-width': 800,
+    'min-height': 600
+  });
 
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/client/splash.html');

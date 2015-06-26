@@ -17,6 +17,10 @@ module.exports = {
         click: emit('custom', 'loadTraining'),
         accelerator: 'Command+O'
       }, {
+        label: '&Preferences',
+        click: emit('custom', 'showPreferences'),
+        accelerator: 'Command+,'
+      }, {
         type: 'separator'
       }, {
         label: '&Reload',

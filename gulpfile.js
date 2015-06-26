@@ -38,21 +38,27 @@ gulp.task('clean:dist', function (cb) {
 });
 
 gulp.task('cp-css-to-dist', [ 'sass' ], function () {
-  var p = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
+  var w = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
+  var d = path.join('.', 'dist', electronVersion, 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources', 'app');
   gulp.src('./build/**/*.css')
-    .pipe(gulp.dest(p))
+    .pipe(gulp.dest(w))
+    .pipe(gulp.dest(d));
 });
 
 gulp.task('cp-html-to-dist', [ 'html' ], function () {
-  var p = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
+  var w = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
+  var d = path.join('.', 'dist', electronVersion, 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources', 'app');
   gulp.src('./build/**/*.html')
-    .pipe(gulp.dest(p))
+    .pipe(gulp.dest(w))
+    .pipe(gulp.dest(d));
 });
 
 gulp.task('cp-js-to-dist', [ 'babel' ], function () {
-  var p = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
+  var w = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
+  var d = path.join('.', 'dist', electronVersion, 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources', 'app');
   gulp.src('./build/**/*.js')
-    .pipe(gulp.dest(p))
+    .pipe(gulp.dest(w))
+    .pipe(gulp.dest(d));
 });
 
 gulp.task('cp-icns:mac', [ 'pack' ], function () {
@@ -311,7 +317,7 @@ gulp.task('sass', function () {
     .pipe(gulp.dest('./build'));
 });
 
-gulp.task('watch', [ 'build' ], function () {
+gulp.task('watch', [ 'build', 'cp-js-to-dist', 'cp-html-to-dist', 'cp-css-to-dist' ], function () {
   gulp.watch('./src/**/*.js', [ 'babel', 'cp-js-to-dist' ]);
   gulp.watch('./src/**/*.html', [ 'html', 'cp-html-to-dist' ]);
   gulp.watch('./src/**/*.scss', [ 'sass', 'cp-css-to-dist' ]);

@@ -32,7 +32,9 @@ module.exports = {
         { label: '&Cut', click: emit('content', 'cut'), accelerator: 'Control+X' },
         { label: 'C&opy', click: emit('content', 'copy'), accelerator: 'Control+C' },
         { label: '&Paste', click: emit('content', 'paste'), accelerator: 'Control+V' },
-        { label: 'Select &All', click: emit('editor', 'selectAll'), accelerator: 'Control+A' }
+        { label: 'Select &All', click: emit('editor', 'selectAll'), accelerator: 'Control+A' },
+        { type: 'separator' },
+        { label: 'Preferences', click: emit('custom', 'showPreferences'), accelerator: 'Control+,' }
       ]
     }
   ]
