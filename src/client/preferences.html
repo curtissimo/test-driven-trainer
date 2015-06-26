@@ -9,62 +9,67 @@
     <link rel="import" href="./components/paper-icon-button/paper-icon-button.html">
     <link rel="import" href="./components/paper-radio-group/paper-radio-group.html">
     <link rel="import" href="./components/paper-radio-button/paper-radio-button.html">
+    <link rel="import" href="./components/paper-header-panel/paper-header-panel.html">
+    <link rel="import" href="./components/paper-toolbar/paper-toolbar.html">
     <link rel="stylesheet" href="./preferences.css">
   </head>
-  <body>
-    <header>
-      <paper-icon-button icon="arrow-back" id="back"></paper-icon-button>
-      <img class="card-icon" src="./icon_512x512.png">
-      <h1>Preferences</h1>
-    </header>
-    <fieldset>
-      <legend>Theme</legend>
-      <paper-radio-group id="themes">
-        <paper-radio-button name="ambiance">ambiance</paper-radio-button>
-        <paper-radio-button name="chaos">chaos</paper-radio-button>
-        <paper-radio-button name="chrome">chrome</paper-radio-button>
-        <paper-radio-button name="clouds">clouds</paper-radio-button>
-        <paper-radio-button name="clouds_midnight">clouds midnight</paper-radio-button>
-        <paper-radio-button name="cobalt">cobalt</paper-radio-button>
-        <paper-radio-button name="crimson_editor">crimson editor</paper-radio-button>
-        <paper-radio-button name="dawn">dawn</paper-radio-button>
-        <paper-radio-button name="dreamweaver">dreamweaver</paper-radio-button>
-        <paper-radio-button name="eclipse">eclipse</paper-radio-button>
-        <paper-radio-button name="github">github</paper-radio-button>
-        <paper-radio-button name="idle_fingers">idle fingers</paper-radio-button>
-        <paper-radio-button name="katzenmilch">katzenmilch</paper-radio-button>
-        <paper-radio-button name="kr_theme">kr theme</paper-radio-button>
-        <paper-radio-button name="kuroir">kuroir</paper-radio-button>
-        <paper-radio-button name="merbivore">merbivore</paper-radio-button>
-        <paper-radio-button name="merbivore_soft">merbivore soft</paper-radio-button>
-        <paper-radio-button name="mono_industrial">mono industrial</paper-radio-button>
-        <paper-radio-button name="monokai">monokai</paper-radio-button>
-        <paper-radio-button name="pastel_on_dark">pastel on dark</paper-radio-button>
-        <paper-radio-button name="solarized_dark">solarized dark</paper-radio-button>
-        <paper-radio-button name="solarized_light">solarized light</paper-radio-button>
-        <paper-radio-button name="terminal">terminal</paper-radio-button>
-        <paper-radio-button name="textmate">textmate</paper-radio-button>
-        <paper-radio-button name="tomorrow">tomorrow</paper-radio-button>
-        <paper-radio-button name="tomorrow_night">tomorrow night</paper-radio-button>
-        <paper-radio-button name="tomorrow_night_blue">tomorrow night blue</paper-radio-button>
-        <paper-radio-button name="tomorrow_night_bright">tomorrow night bright</paper-radio-button>
-        <paper-radio-button name="tomorrow_night_eighties">tomorrow night eighties</paper-radio-button>
-        <paper-radio-button name="twilight">twilight</paper-radio-button>
-        <paper-radio-button name="vibrant_ink">vibrant ink</paper-radio-button>
-        <paper-radio-button name="xcode">xcode</paper-radio-button>
-      </paper-radio-group>
-    </fieldset>
-    <fieldset>
-      <legend>Font</legend>
-      <paper-radio-group id="fonts">
-        <paper-radio-button name="DroidSansMono">Droid</paper-radio-button>
-        <paper-radio-button name="Inconsolata-Regular">Inconsolata</paper-radio-button>
-        <paper-radio-button name="OxygenMono-Regular">Oxygen</paper-radio-button>
-        <paper-radio-button name="PTM55FT">PT</paper-radio-button>
-        <paper-radio-button name="RobotoMono-Regular">Roboto</paper-radio-button>
-        <paper-radio-button name="SourceCodePro-Regular">Source Code Pro</paper-radio-button>
-      </paper-radio-group>
-    </fieldset>
+  <body class='fullbleed layout vertical' unresolved>
+    <paper-header-panel>
+      <paper-toolbar>
+        <paper-icon-button icon="arrow-back" id="back"></paper-icon-button>
+        <div class="title">Preferences</div>
+      </paper-toolbar>
+      <div>
+        <fieldset>
+          <legend>Theme</legend>
+          <paper-radio-group id="themes">
+            <paper-radio-button name="ambiance">ambiance</paper-radio-button>
+            <paper-radio-button name="chaos">chaos</paper-radio-button>
+            <paper-radio-button name="chrome">chrome</paper-radio-button>
+            <paper-radio-button name="clouds">clouds</paper-radio-button>
+            <paper-radio-button name="clouds_midnight">clouds midnight</paper-radio-button>
+            <paper-radio-button name="cobalt">cobalt</paper-radio-button>
+            <paper-radio-button name="crimson_editor">crimson editor</paper-radio-button>
+            <paper-radio-button name="dawn">dawn</paper-radio-button>
+            <paper-radio-button name="dreamweaver">dreamweaver</paper-radio-button>
+            <paper-radio-button name="eclipse">eclipse</paper-radio-button>
+            <paper-radio-button name="github">github</paper-radio-button>
+            <paper-radio-button name="idle_fingers">idle fingers</paper-radio-button>
+            <paper-radio-button name="katzenmilch">katzenmilch</paper-radio-button>
+            <paper-radio-button name="kr_theme">kr theme</paper-radio-button>
+            <paper-radio-button name="kuroir">kuroir</paper-radio-button>
+            <paper-radio-button name="merbivore">merbivore</paper-radio-button>
+            <paper-radio-button name="merbivore_soft">merbivore soft</paper-radio-button>
+            <paper-radio-button name="mono_industrial">mono industrial</paper-radio-button>
+            <paper-radio-button name="monokai">monokai</paper-radio-button>
+            <paper-radio-button name="pastel_on_dark">pastel on dark</paper-radio-button>
+            <paper-radio-button name="solarized_dark">solarized dark</paper-radio-button>
+            <paper-radio-button name="solarized_light">solarized light</paper-radio-button>
+            <paper-radio-button name="terminal">terminal</paper-radio-button>
+            <paper-radio-button name="textmate">textmate</paper-radio-button>
+            <paper-radio-button name="tomorrow">tomorrow</paper-radio-button>
+            <paper-radio-button name="tomorrow_night">tomorrow night</paper-radio-button>
+            <paper-radio-button name="tomorrow_night_blue">tomorrow night blue</paper-radio-button>
+            <paper-radio-button name="tomorrow_night_bright">tomorrow night bright</paper-radio-button>
+            <paper-radio-button name="tomorrow_night_eighties">tomorrow night eighties</paper-radio-button>
+            <paper-radio-button name="twilight">twilight</paper-radio-button>
+            <paper-radio-button name="vibrant_ink">vibrant ink</paper-radio-button>
+            <paper-radio-button name="xcode">xcode</paper-radio-button>
+          </paper-radio-group>
+        </fieldset>
+        <fieldset>
+          <legend>Font</legend>
+          <paper-radio-group id="fonts">
+            <paper-radio-button name="DroidSansMono">Droid</paper-radio-button>
+            <paper-radio-button name="Inconsolata-Regular">Inconsolata</paper-radio-button>
+            <paper-radio-button name="OxygenMono-Regular">Oxygen</paper-radio-button>
+            <paper-radio-button name="PTM55FT">PT</paper-radio-button>
+            <paper-radio-button name="RobotoMono-Regular">Roboto</paper-radio-button>
+            <paper-radio-button name="SourceCodePro-Regular">Source Code Pro</paper-radio-button>
+          </paper-radio-group>
+        </fieldset>
+      </div>
+    </paper-header-panel>
     <script src="./preferences.js"></script>
   </body>
 </html>

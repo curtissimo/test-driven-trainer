@@ -1,41 +1,29 @@
-var EventEmitter = require('events').EventEmitter;
-let emitter = new EventEmitter();
+module.exports = [
+  {
+    label: '&File',
+    submenu: [
+      { label: '&Open training...', command: 'openTraining', accelerator: 'Control+O' },
+      { type: 'separator' },
+      { label: '&Reload', command: 'reload', accelerator: 'Control+R' },
+      { type: 'separator' },
+      { label: '&Dev Tools', command: 'toggleDevTools', accelerator: 'F12' },
+      { type: 'separator' },
+      { label: 'E&xit', command: 'quit', accelerator: 'Control+Q' }
+    ]
+  },
 
-function emit(...args) {
-  return emitter.emit.bind(emitter, ...args);
-}
-
-emitter.command = emit;
-
-module.exports = {
-  emitter: emitter,
-  menu: [
-    {
-      label: '&Test-Driven Trainer',
-      submenu: [
-        { label: '&Open training...', click: emit('custom', 'loadTraining'), accelerator: 'Control+O' },
-        { type: 'separator' },
-        { label: '&Reload', click: emit('content', 'reload'), accelerator: 'Control+R' },
-        { type: 'separator' },
-        { label: '&Dev Tools', click: emit('window', 'toggleDevTools'), accelerator: 'F12' },
-        { type: 'separator' },
-        { label: 'E&xit', click: emit('app', 'quit'), accelerator: 'Control+Q' }
-      ]
-    },
-
-    {
-      label: '&Edit',
-      submenu: [
-        { label: '&Undo', click: emit('editor', 'undo'), accelerator: 'Control+Z' },
-        { label: '&Redo', click: emit('editor', 'redo'), accelerator: 'Control+Shift+Z' },
-        { type: 'separator' },
-        { label: '&Cut', click: emit('content', 'cut'), accelerator: 'Control+X' },
-        { label: 'C&opy', click: emit('content', 'copy'), accelerator: 'Control+C' },
-        { label: '&Paste', click: emit('content', 'paste'), accelerator: 'Control+V' },
-        { label: 'Select &All', click: emit('editor', 'selectAll'), accelerator: 'Control+A' },
-        { type: 'separator' },
-        { label: 'Preferences', click: emit('custom', 'showPreferences'), accelerator: 'Control+,' }
-      ]
-    }
-  ]
-};
+  {
+    label: '&Edit',
+    submenu: [
+      { label: '&Undo', command: 'undo', accelerator: 'Control+Z' },
+      { label: '&Redo', command: 'redo', accelerator: 'Control+Shift+Z' },
+      { type: 'separator' },
+      { label: '&Cut', command: 'cut', accelerator: 'Control+X' },
+      { label: 'C&opy', command: 'copy', accelerator: 'Control+C' },
+      { label: '&Paste', command: 'paste', accelerator: 'Control+V' },
+      { label: 'Select &All', command: 'selectAll', accelerator: 'Control+A' },
+      { type: 'separator' },
+      { label: 'Preferences', command: 'showPreferences', accelerator: 'Control+,' }
+    ]
+  }
+];

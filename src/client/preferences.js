@@ -1,4 +1,5 @@
 let settings = require('./settings');
+let tdt = require('./tdt')();
 let id = function (id) {
   return document.getElementById(id);
 };
@@ -14,4 +15,8 @@ id('themes').addEventListener('click', function () {
 
 id('fonts').addEventListener('click', function () {
   settings.font = this.selected;
+});
+
+id('back').addEventListener('click', function () {
+  tdt.reset();
 });

@@ -3,32 +3,8 @@ body, html {
   font-family: 'Roboto';
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  align-content: stretch;
-  margin: 0;
-  padding: 0;
-}
-
-header {
-  padding: 16px;
-  height: 64px;
-  line-height: 64px;
-  display: flex;
-  align-items: center;
-  background-color: #8BC34A;
-}
-
-img {
-  width: auto;
-  height: 100%;
-  margin: 0 16px;
-}
-
-h1 {
-  flex: 1;
-  font-size: 64px
+body[unresolved] {
+  background-color: #333;
 }
 
 fieldset {
@@ -54,12 +30,4 @@ legend {
 
 #themes > paper-radio-button {
   width: 230px;
-}
-
-#back,
-#back .style-scope.paper-icon-button {
-  width: 64px;
-  height: 64px;
-  padding: 0;
-  margin-right: 16px;
 }
