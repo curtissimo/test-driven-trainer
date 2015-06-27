@@ -3,8 +3,9 @@ let ipc = require('ipc');
 let tdt = null;
 
 class TestDrivenTrainer {
-  constructor(editor) {
+  constructor(prefDialog, editor) {
     this._editor = editor;
+    this._prefDialog = prefDialog;
   }
 
   quit() {
@@ -24,7 +25,7 @@ class TestDrivenTrainer {
   }
 
   showPreferences() {
-    ipc.send('tdt', 'showPreferences');
+    this._prefDialog.open();
   }
 
   reload() {
@@ -56,10 +57,10 @@ class TestDrivenTrainer {
   }
 }
 
-ipc.on('tdt', (event, name, ...args) => {
+ipc.on('tdt', (name, ...args) => {
   tdt[name](...args);
 });
 
-export default function (editor) {
-  return tdt = new TestDrivenTrainer(editor);
+export default function (prefDialog, editor) {
+  return tdt = new TestDrivenTrainer(prefDialog, editor);
 }

@@ -26,6 +26,7 @@
     "paper-icon-button": "PolymerElements/paper-icon-button#^1.0.0",
     "paper-radio-button": "PolymerElements/paper-radio-button#^1.0.0",
     "paper-radio-group": "PolymerElements/paper-radio-group#^1.0.0",
-    "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.0"
+    "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.0",
+    "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable#^1.0.0"
   }
 }

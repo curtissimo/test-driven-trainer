@@ -45,7 +45,7 @@ gulp.task('cp-css-to-dist', [ 'sass' ], function () {
     .pipe(gulp.dest(d));
 });
 
-gulp.task('cp-html-to-dist', [ 'html' ], function () {
+gulp.task('cp-html-to-dist', [ 'html', 'polymer' ], function () {
   var w = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
   var d = path.join('.', 'dist', electronVersion, 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources', 'app');
   gulp.src('./build/**/*.html')
@@ -320,6 +320,7 @@ gulp.task('sass', function () {
 gulp.task('watch', [ 'build', 'cp-js-to-dist', 'cp-html-to-dist', 'cp-css-to-dist' ], function () {
   gulp.watch('./src/**/*.js', [ 'babel', 'cp-js-to-dist' ]);
   gulp.watch('./src/**/*.html', [ 'html', 'cp-html-to-dist' ]);
+  gulp.watch('./src/**/*.scss', [ 'sass', 'cp-css-to-dist' ]);
   gulp.watch('./src/**/*.scss', [ 'sass', 'cp-css-to-dist' ]);
 });
 

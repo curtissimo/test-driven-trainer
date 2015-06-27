@@ -9,7 +9,7 @@ function lsget(key, def) {
 
 const defaultFont = 'DroidSansMono.ttf';
 const defaultTheme = 'solarized_light';
-let validFonts = /^(DroidSansMono|Inconsolata-Regular|OxygenMono-Regular|PTM55FT|RobotoMono-Regular|SourceCodePro-Regular)$/;
+let validFonts = /^(Droid Sans Mono|Inconsolata|Oxygen Mono|PT Mono|Roboto Mono|Source Code Pro)$/;
 
 class Settings {
   get font() {

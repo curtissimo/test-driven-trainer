@@ -45,7 +45,7 @@ class TestDrivenTrainer {
   }
 
   showPreferences() {
-    this._window.loadUrl(`${clientdir}/preferences.html`);
+    this._window.webContents.send('tdt', 'showPreferences');
   }
 
   reload() {

@@ -1,0 +1,131 @@
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../neon-animation/animations/scale-down-animation.html">
+<link rel="import" href="../paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+
+<dom-module id="preferences-dialog">
+  <style>
+    fieldset {
+      border: 0;
+      margin-top: 16px;
+    }
+
+    legend {
+      border-bottom: 1px solid #CCC;
+      width: 100%;
+      display: block;
+    }
+
+    #fonts {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    #themes {
+      justify-content: flex-start;
+    }
+
+    #themes > paper-radio-button {
+      width: 230px;
+    }
+
+    .droid #radioLabel {
+      font-family: 'Droid Sans Mono';
+    }
+  </style>
+
+  <template>
+    <paper-dialog with-backdrop id="dialog" entry-animation="fade-in-animation" exit-animation="scale-down-animation">
+      <h2>Preferences</h2>
+      <paper-dialog-scrollable>
+        <fieldset>
+          <legend>Theme</legend>
+          <paper-radio-group id="themes">
+            <paper-radio-button name="ambiance">ambiance</paper-radio-button>
+            <paper-radio-button name="chaos">chaos</paper-radio-button>
+            <paper-radio-button name="chrome">chrome</paper-radio-button>
+            <paper-radio-button name="clouds">clouds</paper-radio-button>
+            <paper-radio-button name="clouds_midnight">clouds midnight</paper-radio-button>
+            <paper-radio-button name="cobalt">cobalt</paper-radio-button>
+            <paper-radio-button name="crimson_editor">crimson editor</paper-radio-button>
+            <paper-radio-button name="dawn">dawn</paper-radio-button>
+            <paper-radio-button name="dreamweaver">dreamweaver</paper-radio-button>
+            <paper-radio-button name="eclipse">eclipse</paper-radio-button>
+            <paper-radio-button name="github">github</paper-radio-button>
+            <paper-radio-button name="idle_fingers">idle fingers</paper-radio-button>
+            <paper-radio-button name="katzenmilch">katzenmilch</paper-radio-button>
+            <paper-radio-button name="kr_theme">kr theme</paper-radio-button>
+            <paper-radio-button name="kuroir">kuroir</paper-radio-button>
+            <paper-radio-button name="merbivore">merbivore</paper-radio-button>
+            <paper-radio-button name="merbivore_soft">merbivore soft</paper-radio-button>
+            <paper-radio-button name="mono_industrial">mono industrial</paper-radio-button>
+            <paper-radio-button name="monokai">monokai</paper-radio-button>
+            <paper-radio-button name="pastel_on_dark">pastel on dark</paper-radio-button>
+            <paper-radio-button name="solarized_dark">solarized dark</paper-radio-button>
+            <paper-radio-button name="solarized_light">solarized light</paper-radio-button>
+            <paper-radio-button name="terminal">terminal</paper-radio-button>
+            <paper-radio-button name="textmate">textmate</paper-radio-button>
+            <paper-radio-button name="tomorrow">tomorrow</paper-radio-button>
+            <paper-radio-button name="tomorrow_night">tomorrow night</paper-radio-button>
+            <paper-radio-button name="tomorrow_night_blue">tomorrow night blue</paper-radio-button>
+            <paper-radio-button name="tomorrow_night_bright">tomorrow night bright</paper-radio-button>
+            <paper-radio-button name="tomorrow_night_eighties">tomorrow night eighties</paper-radio-button>
+            <paper-radio-button name="twilight">twilight</paper-radio-button>
+            <paper-radio-button name="vibrant_ink">vibrant ink</paper-radio-button>
+            <paper-radio-button name="xcode">xcode</paper-radio-button>
+          </paper-radio-group>
+        </fieldset>
+        <fieldset>
+          <legend>Font</legend>
+          <paper-radio-group id="fonts">
+            <paper-radio-button class="droid" name="Droid Sans Mono">Droid</paper-radio-button>
+            <paper-radio-button name="Inconsolata">Inconsolata</paper-radio-button>
+            <paper-radio-button name="Oxygen Mono">Oxygen</paper-radio-button>
+            <paper-radio-button name="PT Mono">PT</paper-radio-button>
+            <paper-radio-button name="Roboto Mono">Roboto</paper-radio-button>
+            <paper-radio-button name="Source Code Pro">Source Code Pro</paper-radio-button>
+          </paper-radio-group>
+        </fieldset>
+      </paper-dialog-scrollable>
+    </paper-dialog>
+  </template>
+
+  <script>
+    var settings = require('./settings');
+
+    Polymer({
+      is: 'preferences-dialog',
+
+      ready: function () {
+        this.$.themes.select(settings.theme);
+        this.$.fonts.select(settings.font);
+
+        this.$.themes.addEventListener('iron-change', function (e) {
+          if (e.target.checked) {
+            settings.theme = e.target.getAttribute('name');
+          }
+        });
+
+        this.$.fonts.addEventListener('iron-change', function (e) {
+          if (e.target.checked) {
+            settings.font = e.target.getAttribute('name');
+          }
+        });
+      },
+
+      open: function () {
+        var self = this;
+        this.$.dialog.refit();
+        this.$.dialog.center();
+        setTimeout(function () {
+          self.$.dialog.open();
+        }, 500);
+      }
+    });
+  </script>
+</dom-module>
