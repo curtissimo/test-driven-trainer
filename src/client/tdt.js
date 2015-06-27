@@ -6,6 +6,8 @@ class TestDrivenTrainer {
   constructor(prefDialog, editor) {
     this._editor = editor;
     this._prefDialog = prefDialog;
+
+    this.preferencesReady();
   }
 
   quit() {
@@ -26,6 +28,10 @@ class TestDrivenTrainer {
 
   showPreferences() {
     this._prefDialog.open();
+  }
+
+  preferencesReady() {
+    ipc.send('tdt', 'preferencesReady');
   }
 
   reload() {

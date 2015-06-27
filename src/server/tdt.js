@@ -1,3 +1,4 @@
+let EventEmitter = require('events').EventEmitter;
 let ipc = require('ipc');
 let Menu = require('menu');
 
@@ -5,11 +6,27 @@ let tdt = null;
 let basedir = `file://${__dirname}`;
 let clientdir = `file://${__dirname}/../client`;
 
+function attachOnEvents(menu, tdt) {
+  if (menu.on) {
+    tdt.once(menu.on, function () {
+      menu.enabled = true;
+    });
+  }
+  if (menu.items) {
+    menu.items.forEach(m => attachOnEvents(m, tdt));
+  } else if (menu.submenu) {
+    attachOnEvents(menu.submenu, tdt);
+  }
+}
+
 function commandsToClickHandlers(menu, tdt) {
   if (menu.command) {
     menu.click = function ({ command }) {
       tdt[command]();
     };
+  }
+  if (menu.on) {
+    menu.enabled = false;
   }
   if (menu.items) {
     menu.items.forEach(m => commandsToClickHandlers(m, tdt));
@@ -18,13 +35,16 @@ function commandsToClickHandlers(menu, tdt) {
   }
 }
 
-class TestDrivenTrainer {
+class TestDrivenTrainer extends EventEmitter {
   constructor(app, window, menuTemplate) {
+    super();
+
     this._window = window;
     this._app = app;
     menuTemplate.forEach(m => commandsToClickHandlers(m, this));
 
     let m = Menu.buildFromTemplate(menuTemplate);
+    attachOnEvents(m, this);
     Menu.setApplicationMenu(m);
   }
 
@@ -46,6 +66,10 @@ class TestDrivenTrainer {
 
   showPreferences() {
     this._window.webContents.send('tdt', 'showPreferences');
+  }
+
+  preferencesReady() {
+    this.emit('preferences-ready');
   }
 
   reload() {

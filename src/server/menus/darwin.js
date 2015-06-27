@@ -4,7 +4,8 @@ module.exports = [
     submenu: [{
       label: '&Preferences',
       command: 'showPreferences',
-      accelerator: 'Command+,'
+      accelerator: 'Command+,',
+      on: 'preferences-ready'
     }, {
       type: 'separator'
     }, {
@@ -61,12 +62,14 @@ module.exports = [
       {
         label: 'Undo',
         accelerator: 'Command+Z',
-        selector: 'undo:'
+        selector: 'undo:',
+        on: 'editor-ready'
       },
       {
         label: 'Redo',
         accelerator: 'Shift+Command+Z',
-        selector: 'redo:'
+        selector: 'redo:',
+        on: 'editor-ready'
       },
       {
         type: 'separator'
@@ -74,17 +77,20 @@ module.exports = [
       {
         label: 'Cut',
         accelerator: 'Command+X',
-        selector: 'cut:'
+        selector: 'cut:',
+        on: 'editor-ready'
       },
       {
         label: 'Copy',
         accelerator: 'Command+C',
-        selector: 'copy:'
+        selector: 'copy:',
+        on: 'editor-ready'
       },
       {
         label: 'Paste',
         accelerator: 'Command+V',
-        selector: 'paste:'
+        selector: 'paste:',
+        on: 'editor-ready'
       }
     ]
   }
