@@ -321,7 +321,6 @@ gulp.task('watch', [ 'build', 'cp-js-to-dist', 'cp-html-to-dist', 'cp-css-to-dis
   gulp.watch('./src/**/*.js', [ 'babel', 'cp-js-to-dist' ]);
   gulp.watch('./src/**/*.html', [ 'html', 'cp-html-to-dist' ]);
   gulp.watch('./src/**/*.scss', [ 'sass', 'cp-css-to-dist' ]);
-  gulp.watch('./src/**/*.scss', [ 'sass', 'cp-css-to-dist' ]);
 });
 
 
