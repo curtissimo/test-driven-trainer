@@ -15,11 +15,17 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   let mainWindow = new BrowserWindow({
     'min-width': 800,
-    'min-height': 600
+    'min-height': 600,
+    show: false
   });
 
   tdt = new require('./server/tdt')(app, mainWindow, menuTemplate);
   tdt.reset();
+  mainWindow.webContents.once('did-finish-load', function () {
+    setTimeout(function () {
+      mainWindow.show();
+    }, 100);
+  });
 
   mainWindow.on('closed', function() {
     mainWindow = null;

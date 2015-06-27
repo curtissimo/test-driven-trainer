@@ -1,6 +1,8 @@
 let app = null;
 
 addEventListener('load', () => {
+  document.body.removeAttribute('unresolved');
+
   let link = document.createElement('link');
   link.rel = 'import';
   link.href = './components/preferences-dialog/preferences-dialog.html';
