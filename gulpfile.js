@@ -13,6 +13,22 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 
 var electronVersion = 'v0.28.3';
+var macName = 'test-driven-trainer';
+var macExecutableName = macName + '.app';
+var winExecutableName = 'test-driven-trainer.exe';
+var macRename = 'Test-Driven Trainer';
+var macRenameExecutable = macRename + '.app';
+
+function rename(from, to) {
+  return new Promise(function (good, bad) {
+    fs.rename(from, to, function (e) {
+      if (e) {
+        return bad(e);
+      }
+      good();
+    });
+  });
+}
 
 gulp.task('ace', function () {
   return gulp.src('./vendor/ace-builds/src-min-noconflict/**/*.*')
@@ -39,7 +55,7 @@ gulp.task('clean:dist', function (cb) {
 
 gulp.task('cp-css-to-dist', [ 'sass' ], function () {
   var w = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
-  var d = path.join('.', 'dist', electronVersion, 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources', 'app');
+  var d = path.join('.', 'dist', electronVersion, 'darwin-x64', macExecutableName, 'Contents', 'Resources', 'app');
   gulp.src('./build/**/*.css')
     .pipe(gulp.dest(w))
     .pipe(gulp.dest(d));
@@ -47,7 +63,7 @@ gulp.task('cp-css-to-dist', [ 'sass' ], function () {
 
 gulp.task('cp-html-to-dist', [ 'html', 'polymer' ], function () {
   var w = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
-  var d = path.join('.', 'dist', electronVersion, 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources', 'app');
+  var d = path.join('.', 'dist', electronVersion, 'darwin-x64', macExecutableName, 'Contents', 'Resources', 'app');
   gulp.src('./build/**/*.html')
     .pipe(gulp.dest(w))
     .pipe(gulp.dest(d));
@@ -55,7 +71,7 @@ gulp.task('cp-html-to-dist', [ 'html', 'polymer' ], function () {
 
 gulp.task('cp-js-to-dist', [ 'babel' ], function () {
   var w = path.join('.', 'dist', electronVersion, 'win32-x64', 'resources', 'app');
-  var d = path.join('.', 'dist', electronVersion, 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources', 'app');
+  var d = path.join('.', 'dist', electronVersion, 'darwin-x64', macExecutableName, 'Contents', 'Resources', 'app');
   gulp.src('./build/**/*.js')
     .pipe(gulp.dest(w))
     .pipe(gulp.dest(d));
@@ -63,7 +79,7 @@ gulp.task('cp-js-to-dist', [ 'babel' ], function () {
 
 gulp.task('cp-icns:mac', [ 'pack' ], function () {
   var p = path.join(__dirname, 'cache', 'icons', 'mac', 'atom.icns');
-  var d = path.join(__dirname, 'dist', electronVersion, 'darwin-x64', 'test-driven-trainer.app', 'Contents', 'Resources');
+  var d = path.join(__dirname, 'dist', electronVersion, 'darwin-x64', macExecutableName, 'Contents', 'Resources');
   return gulp.src(p)
     .pipe(gulp.dest(d));
 });
@@ -78,6 +94,20 @@ gulp.task('cp-ico:win', [ 'pack' ], function () {
 gulp.task('cp-pngs:web', [ 'icons' ], function () {
   gulp.src('./cache/icons/mac/atom.iconset/icon_512x512.png')
     .pipe(gulp.dest('./build/client'));
+});
+
+gulp.task('electron', [ 'build', 'clean:dist' ], function () {
+  var packageJson = JSON.parse(fs.readFileSync('./build/package.json', 'utf8'));
+  return gulp.src('')
+    .pipe(electron({
+      src: './build',
+      packageJson: packageJson,
+      release: './dist',
+      cache: './cache',
+      version: electronVersion,
+      platforms: [ 'darwin-x64', 'win32-x64', ] //'win32-ia32' ]
+    }))
+    .pipe(gulp.dest(''));
 });
 
 gulp.task('fonts', function () {
@@ -188,6 +218,39 @@ gulp.task('icons', function (done) {
   });
 });
 
+gulp.task('mac-rename:executables', [ 'cp-icons', 'pack', 'mac-rename:helper-plist', 'mac-rename:plist' ], function () {
+  var innerold = path.join(__dirname, 'dist', electronVersion, 'darwin-x64', macExecutableName, 'Contents', 'MacOS', 'Electron'); 
+  var innernew = path.join(__dirname, 'dist', electronVersion, 'darwin-x64', macExecutableName, 'Contents', 'MacOS', macRename); 
+  var baseold = path.join(__dirname, 'dist', electronVersion, 'darwin-x64', macExecutableName);
+  var basenew = path.join(__dirname, 'dist', electronVersion, 'darwin-x64', macRenameExecutable);
+  return rename(innerold, innernew)
+    .then(function () {
+      rename(baseold, basenew);
+    });
+});
+
+gulp.task('mac-rename:helper-plist', [ 'pack', 'electron' ], function (done) {
+  var info = path.join(__dirname, 'dist', electronVersion, 'darwin-x64', macExecutableName, 'Contents', 'Frameworks', 'Electron Helper.app', 'Contents', 'Info.plist');
+  fs.readFile(info, 'utf8', function (e, content) {
+    if (e) {
+      return done(e);
+    }
+    content = content.replace(/Electron/g, macRename);
+    fs.writeFile(info, content, 'utf8', done);
+  })
+});
+
+gulp.task('mac-rename:plist', [ 'pack', 'electron' ], function (done) {
+  var info = path.join(__dirname, 'dist', electronVersion, 'darwin-x64', macExecutableName, 'Contents', 'Info.plist');
+  fs.readFile(info, 'utf8', function (e, content) {
+    if (e) {
+      return done(e);
+    }
+    content = content.replace(/Electron/g, macRename);
+    fs.writeFile(info, content, 'utf8', done);
+  })
+});
+
 gulp.task('modules', function () {
   return new Promise(function (good, bad) {
     var p = path.join(__dirname, 'package.json');
@@ -241,20 +304,6 @@ gulp.task('modules', function () {
   });
 });
 
-gulp.task('pack', [ 'build', 'clean:dist' ], function () {
-  var packageJson = JSON.parse(fs.readFileSync('./build/package.json', 'utf8'));
-  return gulp.src('')
-    .pipe(electron({
-      src: './build',
-      packageJson: packageJson,
-      release: './dist',
-      cache: './cache',
-      version: electronVersion,
-      platforms: [ 'darwin-x64', 'win32-x64', ] //'win32-ia32' ]
-    }))
-    .pipe(gulp.dest(''));
-});
-
 gulp.task('package.json', function (done) {
   new Promise(function (good, bad) {
     var p = path.join(__dirname, 'package.json');
@@ -305,7 +354,7 @@ gulp.task('polymer', function () {
 
 gulp.task('rename:win', [ 'pack' ], function (done) {
   var p = path.join(__dirname, 'dist', electronVersion, 'win32-x64');
-  var s = path.join(p, 'test-driven-trainer.exe');
+  var s = path.join(p, winExecutableName);
   var d = path.join(p, 'Test Driven Trainer.exe');
   fs.rename(s, d, done);
 });
@@ -331,4 +380,6 @@ gulp.task('cp-icons', [ 'cp-icns:mac', 'cp-ico:win' ]);
 gulp.task('dev', [ 'build', 'watch' ]);
 gulp.task('dist', [ 'build', 'pack', 'cp-icons', 'rename' ]);
 gulp.task('default', [ 'build' ]);
-gulp.task('rename', [ 'rename:win' ]);
+gulp.task('mac-rename', [ 'mac-rename:plist', 'mac-rename:helper-plist', 'mac-rename:executables' ])
+gulp.task('pack', [ 'electron' ]);
+gulp.task('rename', [ 'pack', 'cp-icons', 'rename:win', 'mac-rename' ]);
