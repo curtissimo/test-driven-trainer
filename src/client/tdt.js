@@ -27,7 +27,7 @@ class TestDrivenTrainer {
   }
 
   showPreferences() {
-    this._prefDialog.open();
+    this._prefDialog.toggle();
   }
 
   preferencesReady() {

@@ -125,6 +125,14 @@
         setTimeout(function () {
           self.$.dialog.open();
         }, 500);
+      },
+
+      close: function () {
+        this.$.dialog.close();
+      },
+
+      toggle: function () {
+        this.$.dialog.toggle();
       }
     });
   </script>
